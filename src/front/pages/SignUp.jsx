@@ -1,47 +1,41 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useGlobalReducer, { StoreProvider } from "../hooks/useGlobalReducer";
-import { login } from "../fetch";
+import {signUp} from "../fetch";
 
 
 
 
-export const Login = () => {
+
+export const SignUp = () => {
     const [email, setEmail]= useState("");
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const {store, dispatch} = useGlobalReducer();
 
     const handleLoginClick = ()=>{
-        login(email, password, dispatch)
+        signUp(email, password, dispatch)
 
     };
 
-    //create useEffect to send user to private route when login is succesful and token is received
+    //create useEffect to send user to login page
     //useEffect to redirect when login is successful
     useEffect(() => {
-        if (store.isLoginSuccessful){
-            navigate('/private');
+        if (store.isSignUpSuccessful){
+            navigate('/login');
         }
         
-    }, [store.isLoginSuccessful]); 
+    }, [store.isSignUpSuccessful]); 
 
     return(
 
         <>
-        <div className="login-page text-center mt-5">
+        <div className="signUp-page text-center mt-5">
             {
-                (store.token && store.token !== undefined && store.token !== "")
-                    ?
-                    <>
-                    <h1>Hello! You are logged in</h1>
-                    <div>{store.token}</div>
-                    
-                    </>
-                    :
+                
 
                     <>
-                    <h1>Login</h1>
+                    <h1>SignUp</h1>
 
                     <div>
                         <input
@@ -66,7 +60,7 @@ export const Login = () => {
                 <div>
                      <button 
                          onClick={handleLoginClick}
-                            >Login
+                            >Sign Up
                     </button>
                 </div>
 

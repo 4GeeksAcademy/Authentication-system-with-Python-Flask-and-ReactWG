@@ -2,26 +2,35 @@ export const initialStore=()=>{
   return{
     token: null,
     isLoginSuccessful: false,
+    message:'',
+    isSignUpSuccessful: false,
   }
 }
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
-    case 'set_hello':
-      return {
+    case 'fetchedToken':{
+      const { token, isLoginSuccessful} = action.payload;
+      return{
         ...store,
-        message: action.payload
-      };
-      
-    case 'add_task':
+        token: token,
+        isLoginSuccessful: isLoginSuccessful,
 
-      const { id,  color } = action.payload
+      }
+    }
+    case'successfulSignUp':{
 
-      return {
+      const{message, isSignUpSuccessful}=action.payload;
+      return{
         ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
+        message:message,
+        isSignUpSuccessful: isSignUpSuccessful,
+      }
+    }
+
+
+
+
     default:
-      throw Error('Unknown action.');
-  }    
-}
+      throw Error('unknown action.');
+  }}
